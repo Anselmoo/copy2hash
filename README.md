@@ -3,4 +3,4 @@
 ## Copy or rename any files to *hash* named files via terminal
 ---
 
-`copy2hash` is instantly copying or renaming a single file or file-series to file(s) with a *new* secure hash-title.
+`copy2hash` copies or renames file(s) with regular titles to file(s) with a *hash-secured* title.
