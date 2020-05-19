@@ -1,2 +1,11 @@
 .vscode/settings.json
 example.ipy
+copy2hash/example1.txt
+copy2hash/example2.txt
+copy2hash/example3.npy
+test/test2/__init__.py
+copy2hash/example4
+copy2hash/example5
+copy2hash/dir_nested/dir_sub_1/dir_sub_2/example3.txt
+copy2hash/dir_simple/example1.txt
+copy2hash/dir_simple/example2.txt
