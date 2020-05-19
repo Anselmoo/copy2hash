@@ -12,7 +12,7 @@
 import argparse
 import hashlib as hlib
 from pathlib import Path
-from shutil import copyfile
+from shutil import copy
 import sys
 
 # imported fileformats
@@ -20,7 +20,7 @@ import csv
 import json
 import pickle
 import yaml
-import xml
+from dict2xml import dict2xml
 
 try:
     from . import __version__
@@ -35,13 +35,17 @@ def log(msg, mode=None):
     msg : str
         Message to print to the terminal.
     mode : int, optional
-        If mode is activated, message becomes an error message for 1 or verbose message 
-        for 2.
+        If mode is activated, message becomes for:
+        1. an error message 
+        2. a verbose message 
+        3. a warning message
     """
     if mode == 1:
         print(f"[ERROR] {msg}")
     elif mode == 2:
-        print(f"[ERROR] {msg}")
+        print(f"[VERBOSE] {msg}")
+    elif mode == 3:
+        print(f"[WARNING] {msg}")
     else:
         print(msg)
 
@@ -54,7 +58,7 @@ if sys.version < "3.6":
 class SHAKeys:
     sha1 = "sha1"
     sha224 = "sha224"
-    ssa256 = "ssa256"
+    sha256 = "sha256"
     sha384 = "sha384"
     sha512 = "sha512"
     blake2b = "blake2b"
@@ -72,55 +76,413 @@ class ExportReport:
     def __init__(self, args):
         self.args = args
 
+    def make_export(self, export_file):
+        ["csv", "json", "pkl", "txt", "yaml", "xml"]
+
+        for key in self.args["report"].values():
+            if key == "csv":
+                self.write_csv(export_file, fname="./test")
+            elif key == "json":
+                self.write_json(export_file, fname="./test")
+            elif key == "pkl":
+                self.write_pickle(export_file, fname="./test")
+            elif key == "txt":
+                self.write_txt(export_file, fname="./test", fxt="txt")
+            elif key == "yaml":
+                self.write_yaml(export_file, fname="./test")
+            elif key == "xml":
+                self.write_xml(export_file, fname="./test")
+            else:
+                self.write_txt(export_file, fname="./test", fxt=key)
+
+    @staticmethod
+    def write_csv(e_dict, fname):
+        with open(f"{fname}.csv", "w+") as f:  # Just use 'w' mode in 3.x
+            writer = csv.writer(f)
+            writer.writerow(e_dict.keys())
+            writer.writerows(zip(*e_dict.values()))
+
+    @staticmethod
+    def write_json(e_dict, fname):
+        json_file = json.dumps(e_dict, indent=4)
+        f = open(f"{fname}.json", "w+")
+        f.write(json_file)
+        f.close()
+
+    @staticmethod
+    def write_pickle(e_dict, fname):
+        f = open(f"{fname}.pkl", "wb+")
+        pickle.dump(e_dict, f)
+        f.close()
+
+    @staticmethod
+    def write_txt(e_dict, fname, fxt="txt"):
+        with open(f"{fname}.{fxt}", "w+") as f:  # Just use 'w' mode in 3.x
+            writer = csv.writer(f, delimiter="\t")
+            writer.writerow(e_dict.keys())
+            writer.writerows(zip(*e_dict.values()))
+
+    @staticmethod
+    def write_yaml(e_dict, fname):
+        yaml_file = yaml.dump(e_dict, indent=4)
+        f = open(f"{fname}.yaml", "w+")
+        f.write(yaml_file)
+        f.close()
+
+    @staticmethod
+    def write_xml(e_dict, fname, tag="report"):
+        f = open(f"{fname}.xml", "w+")
+        f.write(dict2xml(e_dict, wrap="all", indent="  "))
+        f.close()
+
 
 class HashTag:
+
+    hname = str
+
     def __init__(self, args):
         self.args = args
 
+    @staticmethod
+    def fpath2hash(fpath, key):
+        """Transform regular expression into hash translated expression.
+
+        Parameters
+        ----------
+        fpath : str
+            Final path of the file name 
+        key : str
+            Reference key of the secured hash algorithm
+
+        Returns
+        -------
+        hcode: str
+            Returns the encoded full path in hexadecimal format.
+        """
+        # Encode to byte
+        fpath_encoded = fpath.encode("utf-8")
+        if key == SHAKeys.sha1:
+            hcode = hlib.sha1(fpath_encoded)
+        elif key == SHAKeys.sha224:
+            hcode = hlib.sha224(fpath_encoded)
+        elif key == SHAKeys.sha256:
+            hcode = hlib.sha256(fpath_encoded)
+        elif key == SHAKeys.sha384:
+            hcode = hlib.sha384(fpath_encoded)
+        elif key == SHAKeys.sha512:
+            hcode = hlib.sha512(fpath_encoded)
+        elif key == SHAKeys.blake2b:
+            hcode = hlib.blake2b(fpath_encoded)
+        elif key == SHAKeys.blake2s:
+            hcode = hlib.blake2s(fpath_encoded)
+        elif key == SHAKeys.md5:
+            hcode = hlib.md5(fpath_encoded)
+        elif key == SHAKeys.sha3_224:
+            hcode = hlib.sha3_224(fpath_encoded)
+        elif key == SHAKeys.sha3_256:
+            hcode = hlib.sha3_256(fpath_encoded)
+        elif key == SHAKeys.sha3_384:
+            hcode = hlib.sha3_384(fpath_encoded)
+        elif key == SHAKeys.sha3_512:
+            hcode = hlib.sha512(fpath_encoded)
+        elif key == SHAKeys.shake_128:
+            hcode = hlib.shake_128(fpath_encoded)
+        elif key == SHAKeys.shake_256:
+            hcode = hlib.shake_256(fpath_encoded)
+
+        return hcode.hexdigest()
+
+    def make_full_hashname(self, hpath, suffix, key):
+        """Make the full hash secured filename. 
+
+        Parameters
+        ----------
+        hpath : str
+            The full hash secured filename.
+        suffix : str
+            The standard file extension.
+        key : str
+            SHA-key used as prefix or file extension. 
+
+        Returns
+        -------
+        hname : str
+            The full hash secured filename with optional suffixes in as prefix or file 
+            extension. 
+        """
+        if self.args["no_file_extension"]:
+            return hpath
+
+        if (
+            not self.args["no_file_extension"]
+            and not self.args["file_extension"]
+            and not self.args["file_suffix"]
+        ):
+            return "{}{}".format(hpath, suffix)
+        if self.args["file_extension"]:
+            hpath = "{}.{}".format(hpath, key)
+        if self.args["file_suffix"]:
+            hpath = "{}-{}".format(key, hpath)
+        return hpath
+
+    def generate_hashname(self, fname, suffix, sha_key):
+        """Generate the hashname of the filename.
+
+        generate_hashname() generates for a given filename and a given reference key, 
+        the encoded filename in hexadecimal format.
+
+        Notes
+        -----
+            1. The full-path will be encoded in in hexadecimal format by using a
+                reference secure hash algorithms (sha) from `hashlib`.
+            2. The new hashname will be normally merged with the standard suffix (file 
+                extension) from the reference filename. The suffix can be optional:
+                    a. Remove any file extension.
+                    b. Replaced by the abbreviation of the used secure hash algorithms 
+                        (sha).
+                    c. Removed the standard file extension and add the used secure hash 
+                        algorithms (sha) in front of the new hashname seperated by a 
+                        colon (:).
+
+        Parameters
+        ----------
+        fname : [type]
+            [description]
+        sha_key : [type]
+            [description]
+
+        Returns
+        -------
+        hname: str
+            dd
+        """
+
+        hpath = self.fpath2hash(fname, sha_key)
+        self.hname = self.make_full_hashname(hpath, suffix, sha_key)
+
+        return self.hname
+
 
 class Copy2Hash(ExportReport, HashTag):
-    _copy_dir = {"index":[], "mode": [], "filename": []}    
+    """[summary]
+
+    Parameters
+    ----------
+    ExportReport : class
+        [description]
+    HashTag : class
+        [description]
+    
+    Attributes
+    ----------
+    _copy_dir : dir
+       [description] 
+    
+    Notes
+    -----
+    1. The filename will be deconvoluted parents-path, final-path, and suffix.
+    """
+
+    _copy_dir = {
+        "index": [],
+        "filename": [],
+        "ppath": [],
+        "fpath": [],
+        "suffix": [],
+        "mode": [],
+        "home_dir": [],
+        "copy_dir": [],
+    }
 
     def __init__(self, args):
 
         super().__init__(args)
         self.args = args
-    
-    def hallo(self):
-        print("hallo", self.args)
 
-    def get_files(self):
+    @staticmethod
+    def deconvolute_path(fname):
+        """Deconvoulte the filename into the dir, name, ext.
+
+        Parameters
+        ----------
+        fname : str
+            Current filename including the parent directory.
+
+        Returns
+        -------
+        ppath : str
+            Parent path of the current file.
+        fpath : str
+            Final path of the current file.
+        suffix : str
+            File extension of the current file.
+        fname : str
+            Filename of the current filename without the parent path.
+        """
+        # Deconvulute full directory and file path
+        ppath = Path(fname).parent
+        fpath = Path(fname).stem
+        suffix = Path(fname).suffix
+        # file name with file extension
+        fname = Path(fname).name
+        return ppath, fpath, suffix, fname
+
+    @staticmethod
+    def get_copypath(s_ppath, args):
+        """Get the path to copy or move the file(s).
+
+        get_copypath() checks if the copy directory is equal to the home directory 
+        (`./`), if not it replaced the home directory by the new reference directory.
+
+        Parameters
+        ----------
+        args : dict
+            Dictionary of the keywords and values from the parser.
+        fname : str
+            Filename of current datafile to copy.
+
+        Returns
+        -------
+        s_ppath: str
+            Standard parents path for copying of moving the hash secured files from 
+            './' to './'.
+        n_ppath: str, optional
+            New parents path for copying of moving the hash secured files from './' 
+            to './directory'.
+        """
+
+        directory = args["directory"]
+        if args["directory"]:
+            n_ppath = Path(args["directory"])
+            if not directory.is_dir():
+                directory.mkdir(parents=True, exist_ok=True)
+                if args["verbose"]:
+                    log(f"Made new directory {directory}!", 2)
+            return s_ppath.as_posix(), n_ppath.as_posix()
+        return s_ppath.as_posix(), s_ppath.as_posix()
+
+    def find_files(self):
         """Get the file names and save it.
 
-        get_files() reads the filenames and the working mode to an internal dictionary.
+        find_files() reads the filenames and the working mode to an internal dictionary.
         This is part I of II, because get_hash() has to add the hash-keys according to 
         the number of selected SHA keys in the parser. 
-        """        
-        for i, file in enumerate(self.args["infile"]):
+        """
+        for i, fname in enumerate(self.args["infile"]):
             self._copy_dir["index"].append(i)
+            ppath, fpath, suffix, fname = self.deconvolute_path(fname)
+            self._copy_dir["filename"].append(fname)
+            self._copy_dir["ppath"].append(ppath)
+            self._copy_dir["fpath"].append(fpath)
+            self._copy_dir["suffix"].append(suffix)
+
             if self.args["move"]:
-               self._copy_dir["mode"].append("move")
+                self._copy_dir["mode"].append("move")
             else:
                 self._copy_dir["mode"].append("copy")
-            self._copy_dir["filename"].append(file)
-            
-            self.hallo()
-            #self._copy_dir[SHAKeys.blake2s] = file
-    
-    def get_hash(self):
-        
-        print(self._copy_dir)
 
-    
-    def ext_dir(self):
-        directory = Path(self.args["direcotry"])
-        if not directory.is_dir():
-            directory.mkdir(parents=True, exist_ok=True)
-            if self.args["verbose"]:
-                log(f"Made directory {directory}!", 2)
-    
-    def initialise(self):
-        pass
+            s_ppath, n_ppath = self.get_copypath(ppath, self.args)
+            self._copy_dir["home_dir"].append(s_ppath)
+            self._copy_dir["copy_dir"].append(n_ppath)
+
+    def transform_hash(self):
+        """Get the hash secured file names.
+
+        transform_hash() transform the regular filename(s) to a hash secured 
+        filename(s). It adds the new hash secured filename(s) and their export 
+        directory to the _copy_dir directory.
+        """
+        for i, sha_key in enumerate(self.args["sha"]):
+            sha_fname = []
+            for (fpath, suffix) in zip(
+                self._copy_dir["fpath"], self._copy_dir["suffix"]
+            ):
+
+                hname = self.generate_hashname(fpath, suffix, sha_key)
+                sha_fname.append(hname)
+            self._copy_dir[sha_key] = sha_fname
+
+    def copy_files(self):
+
+        sha_key_list = list(self._copy_dir.keys())[8:]
+
+        for filename, home_path, copy_path in zip(
+            self._copy_dir["filename"],
+            self._copy_dir["home_dir"],
+            self._copy_dir["copy_dir"],
+        ):
+            for sha_key in sha_key_list:
+                for copyname in self._copy_dir[sha_key]:
+                    try:
+                        copy(
+                            Path(home_path).joinpath(filename),
+                            Path(copy_path).joinpath(copyname),
+                        )
+                        if self.args["verbose"]:
+                            log(
+                                "Copy file '{}/{}' \n\tto '{}/{}'".format(
+                                    home_path, filename, copy_path, copyname
+                                ),
+                                2,
+                            )
+                    except FileNotFoundError as e_1:
+                        log(msg=f"{e_1}", mode=3)
+                        pass
+                    except IsADirectoryError as e_2:
+                        log(msg=f"{e_2}", mode=3)
+                        pass
+
+    def move_files(self):
+
+        sha_key_list = list(self._copy_dir.keys())[8:]
+        if len(sha_key_list) > 1:
+            sha_key = sha_key_list[0]
+            log("SHA key list is >1; only the first will be picked!", 3)
+        else:
+            sha_key = sha_key_list
+        for filename, home_path, move_path in zip(
+            self._copy_dir["filename"],
+            self._copy_dir["home_dir"],
+            self._copy_dir["copy_dir"],
+        ):
+            for movename in self._copy_dir[sha_key]:
+                try:
+                    Path(home_path).joinpath(filename).rename(
+                        Path(move_path).joinpath(movename)
+                    )
+                    if self.args["verbose"]:
+                        log(
+                            "Move file '{}/{}' \n\tto '{}/{}'".format(
+                                home_path, filename, move_path, movename
+                            ),
+                            2,
+                        )
+                except FileNotFoundError as e_1:
+                    log(msg=f"{e_1}", mode=3)
+                    pass
+                except IsADirectoryError as e_2:
+                    log(msg=f"{e_2}", mode=3)
+                    pass
+
+    def clean_dict(self):
+
+        del self._copy_dir["ppath"]
+        del self._copy_dir["fpath"]
+        del self._copy_dir["suffix"]
+        # self._copy_dir["home_dir"] = str(self._copy_dir["home_dir"])
+        # self._copy_dir["copy_dir"] = str(self._copy_dir["copy_dir"])
+
+    def copy2hash(self):
+        self.find_files()
+        self.transform_hash()
+        if self.args["move"]:
+            self.move_files()
+        else:
+            self.copy_files()
+        # Remove unnecessary entries in the dictionary
+        self.clean_dict()
+
+        self.make_export(self._copy_dir)
 
 
 def get_args(opt=None):
@@ -157,8 +519,8 @@ def get_args(opt=None):
         help=(
             "define one or a series of file format(s) for the rename-report(s) to "
             "retrace the copying or rename of the file(s). The availabel file formats "
-            "are: csv, json, pkl, txt, yaml, xml, or own file extension as ASCII; "
-            "default is json"
+            "are:'csv', 'json', 'pkl', 'txt', 'yaml', 'xml', or own file extension as "
+            "ASCII; default is 'json'"
         ),
         default=["json"],
         nargs="*",
@@ -170,9 +532,9 @@ def get_args(opt=None):
         help=(
             "define one or a series of secure hash algorithms (sha) for copying or "
             "rename of the file(s). The availabel secure hash algorithms (sha) are: "
-            "are: sha1, sha224, ssa256, sha384, sha512, blake2b, blake2s, md5, "
-            "sha3_224, sha3_256, sha3_384, sha3_512, shake_128, shake_256; default "
-            "sha256"
+            "'sha1', 'sha224', 'sha256', 'sha384', 'sha512', 'blake2b', 'blake2s', "
+            "'md5', 'sha3_224', 'sha3_256', 'sha3_384', 'sha3_512', 'shake_128', "
+            "'shake_256'; default 'sha256'"
         ),
         default=["sha256"],
         nargs="*",
@@ -187,7 +549,6 @@ def get_args(opt=None):
             "can required sudo rights."
         ),
         default=None,
-        nargs=1,
         type=str,
     )
     parser.add_argument(
@@ -206,13 +567,27 @@ def get_args(opt=None):
             "replaced the given file extension by the abbreviations of the used secure "
             "hash algorithms (sha)"
         ),
-        action="store_false",
+        action="store_true",
+    )
+    parser.add_argument(
+        "-sxt",
+        "--file_suffix",
+        help=(
+            "removed the given file extension and add a suffix in front of the file "
+            "based on the abbreviations of the used secure hash algorithms (sha). It "
+            "is seperated by colon like "
+            "'sha256-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'"
+        ),
+        action="store_true",
     )
     parser.add_argument(
         "-nfxt",
         "--no_file_extension",
-        help=("removed the given file extension by the nothing"),
-        action="store_false",
+        help=(
+            "removed the any file extension and just copy or move the file(s) as sha "
+            "renamed file(s)"
+        ),
+        action="store_true",
     )
     parser.add_argument(
         "-ver", "--verbose", help=("enable the verbose mode"), action="store_true"
@@ -240,11 +615,18 @@ def command_line_runner():
     if not args["infile"]:
         log("Missing input file(s)!", mode=1)
         return
-    
+
     if args["directory"]:
+        print(args["directory"])
         args["directory"] = Path(args["directory"])
-    Copy2Hash(args).get_files()
-    
+
+    if not set(args["sha"]).issubset(SHAKeys.__dict__):
+        log("No legal SHA-key(s) {}!".format(args["sha"]), 1)
+        return
+    if args["verbose"]:
+        msg = "Found following files:\n{}".format("\n".join(args["infile"]))
+        log(msg=msg, mode=2)
+    Copy2Hash(args).copy2hash()
 
 
 if __name__ == "__main__":

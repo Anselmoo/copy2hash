@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "a4275436809a7e2913b360dd75064953a79bf13d255d76de359692e861a213ef"
+            "sha256": "786e3ddfb156511aa758a7b1583a38fe6e6b95e17e5d4733c6a3d6fab438d021"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -16,6 +16,13 @@
         ]
     },
     "default": {
+        "dict2xml": {
+            "hashes": [
+                "sha256:1446e7d89b39630e53c20eb38e05046216e3dd72a822954fe7548fa59145d62d"
+            ],
+            "index": "pypi",
+            "version": "==1.7.0"
+        },
         "pyyaml": {
             "hashes": [
                 "sha256:06a0d7ba600ce0b2d2fe2e78453a470b5a6e000a985dd4a4e54e436cc36b0e97",

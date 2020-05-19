@@ -9,3 +9,8 @@ copy2hash/example5
 copy2hash/dir_nested/dir_sub_1/dir_sub_2/example3.txt
 copy2hash/dir_simple/example1.txt
 copy2hash/dir_simple/example2.txt
+notes
+copy2hash/test2/233/323/33/example7.txt
+copy2hash/.DS_Store
+copy2hash/dir_nested/dir_sub_1/dir_sub_2/.DS_Store
+copy2hash/dir_simple/.DS_Store
