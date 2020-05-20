@@ -464,7 +464,7 @@ class Copy2Hash(ExportReport, HashTag):
         fpath : str
             Final path of the current file.
         suffix : str
-            file-extension of the current file.
+            File-extension of the current file.
         fname : str
             Filename of the current filename without the parent path.
         """
