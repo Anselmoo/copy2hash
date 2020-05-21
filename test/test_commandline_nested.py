@@ -5,7 +5,7 @@ from pathlib import Path
 class TestNestedDirectories(object):
     def test_local_nested_files_i(self):
         args = {
-            "infile": list(Path("test").rglob("*")),
+            "infile": list(Path("test").rglob("*.txt")),
             "report": ["json"],
             "report_name": "copy_report",
             "sha": ["sha256"],
@@ -25,7 +25,7 @@ class TestNestedDirectories(object):
     def test_local_nested_files_ii(self):
         # Double check concerning copy rights
         args = {
-            "infile": list(Path("test").rglob("*")),
+            "infile": list(Path("test").rglob("*.txt")),
             "report": ["json"],
             "report_name": "copy_report",
             "sha": ["sha256"],
@@ -44,7 +44,7 @@ class TestNestedDirectories(object):
 
     def test_local_nested_files_iii(self):
         args = {
-            "infile": list(Path("test").rglob("*")),
+            "infile": list(Path("test").rglob("*.txt")),
             "report": ["csv", "json", "pkl", "yaml", "txt", "xml"],
             "report_name": "report4travis",
             "sha": [
@@ -79,7 +79,7 @@ class TestNestedDirectories(object):
     def test_local_nested_files_iiii(self):
         # Double check concerning copy rights
         args = {
-            "infile": list(Path("test").rglob("*")),
+            "infile": list(Path("test").rglob("*.txt")),
             "report": ["csv", "json", "pkl", "yaml", "txt", "xml"],
             "report_name": "report4travis",
             "sha": [

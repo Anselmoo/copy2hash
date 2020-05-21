@@ -6,10 +6,10 @@ class TestSingleRuns(object):
     def test_all_reports(self):
         args = {
             "infile": list(Path("test").glob("example1.txt")),
-            "report": ["csv", "json", "pkl", "yaml", "txt", "xml"],
+            "report": ["csv", "json", "pkl", "yaml", "txt", "xml", "out"],
             "report_name": "copy_report",
             "sha": ["sha256"],
-            "directory": None,
+            "directory": "home_home",
             "move": False,
             "file_extension": False,
             "file_suffix": False,
