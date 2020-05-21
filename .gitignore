@@ -1,0 +1,13 @@
+.vscode/settings.json
+example.ipy
+notes
+dist/*
+copy2hash.egg-info/
+copy2hash/__pycache__/
+build/
+copy2hash/.DS_Store
+test/.DS_Store
+.DS_Store
+.coverage
+copy_report.json
+test/__pycache__/test_call.cpython-37-pytest-5.4.2.pyc
