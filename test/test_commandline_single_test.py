@@ -24,7 +24,7 @@ class TestSingleRuns(object):
 
     def test_local_specific_files(self):
         args = {
-            "infile": list(Path("test").glob("*")),
+            "infile": list(Path("test").glob("*.txt")),
             "report": ["json"],
             "report_name": "copy_report",
             "sha": ["sha256"],
