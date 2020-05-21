@@ -77,7 +77,7 @@ class TestSingleRuns(object):
 
     def test_move_local_files(self):
         args = {
-            "infile": list(Path("test").glob("example*.txt")),
+            "infile": list(Path("test").glob("example1.txt")),
             "report": ["json"],
             "report_name": "copy_report",
             "sha": ["sha256"],

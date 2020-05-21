@@ -607,7 +607,7 @@ class Copy2Hash(ExportReport, HashTag):
             sha_key = sha_key_list[0]
             log("SHA key list is >1; only the first will be picked!", 3)
         else:
-            sha_key = sha_key_list
+            sha_key = sha_key_list[0]
         for filename, home_path, move_path in zip(
             self._copy_dir["filename"],
             self._copy_dir["home_dir"],
