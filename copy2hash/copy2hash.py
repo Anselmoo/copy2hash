@@ -444,21 +444,19 @@ class Copy2Hash(ExportReport, HashTag):
        after cleaning this dictionary will be used for generating the report. 
     """
 
-    
-
     def __init__(self, args):
         """Initialise the class with super."""
         super().__init__(args)
         self.args = args
         self._copy_dir = {
-        "index": [],
-        "filename": [],
-        "ppath": [],
-        "fpath": [],
-        "suffix": [],
-        "mode": [],
-        "home_dir": [],
-        "copy_dir": [],
+            "index": [],
+            "filename": [],
+            "ppath": [],
+            "fpath": [],
+            "suffix": [],
+            "mode": [],
+            "home_dir": [],
+            "copy_dir": [],
         }
 
     @staticmethod
