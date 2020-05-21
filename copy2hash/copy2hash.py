@@ -376,7 +376,7 @@ class HashTag:
             and not self.args["file_extension"]
             and not self.args["file_suffix"]
         ):
-            return "{}.{}".format(hpath, suffix)
+            return "{}{}".format(hpath, suffix)
         if self.args["file_extension"]:
             hpath = "{}.{}".format(hpath, sha_key)
         if self.args["file_suffix"]:
@@ -459,7 +459,7 @@ class Copy2Hash(ExportReport, HashTag):
         """Initialise the class with super."""
         super().__init__(args)
         self.args = args
-
+        
     @staticmethod
     def deconvolute_path(fname):
         """Deconvoulte the filename into the dir, name, ext.
@@ -719,7 +719,8 @@ def get_args(opt=None):
             "rename of the file(s). The availabel secure hash algorithms (sha) are: "
             "'sha1', 'sha224', 'sha256', 'sha384', 'sha512', 'blake2b', 'blake2s', "
             "'md5', 'sha3_224', 'sha3_256', 'sha3_384', 'sha3_512', 'shake_128', "
-            "'shake_256'; default 'sha256'"
+            "'shake_256'; default 'sha256'. The 'shake_128' and 'shake_256' are "
+            "defined for 32 character length."
         ),
         default=["sha256"],
         nargs="*",
@@ -824,7 +825,7 @@ def command_line_runner(opt=None):
         return
 
     if args["verbose"]:
-        msg = "Found following files:\n{}".format("\n".join(args["infile"]))
+        msg = "Found following files:\n{}".format("\n".join(str(args["infile"])))
         log(msg=msg, mode=2)
 
     Copy2Hash(args).copy2hash()

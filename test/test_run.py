@@ -28,7 +28,7 @@ class TestParser(object):
         args["infile"] = fnames
 
         assert args == copy2hash.get_args(opt=args)
-    
+
     def test_parser_all(self):
 
         fnames = Path("test").glob("*")
@@ -45,20 +45,18 @@ class TestParser(object):
 
         assert args == copy2hash.get_args(opt=args)
 
+
 class TestCommandLine(object):
+    def test_nofiles(self):
 
-        def test_nofiles(self):
-            
-            args = __refargs__
-            args["infile"] = []
-            copy2hash.command_line_runner(opt=args)
-            assert 1
+        args = __refargs__
+        args["infile"] = []
+        copy2hash.command_line_runner(opt=args)
+        assert 1
 
-        def test_local_directory(self):
-            
-            args = __refargs__
-            args["infile"] = [.]
-            copy2hash.command_line_runner(opt=args)
-            assert 1
+    def test_local_directory(self):
 
-        
+        args = __refargs__
+        args["infile"] = ["."]
+        copy2hash.command_line_runner(opt=args)
+        assert 1
