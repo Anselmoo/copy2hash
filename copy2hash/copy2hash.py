@@ -444,7 +444,13 @@ class Copy2Hash(ExportReport, HashTag):
        after cleaning this dictionary will be used for generating the report. 
     """
 
-    _copy_dir = {
+    
+
+    def __init__(self, args):
+        """Initialise the class with super."""
+        super().__init__(args)
+        self.args = args
+        self._copy_dir = {
         "index": [],
         "filename": [],
         "ppath": [],
@@ -453,12 +459,7 @@ class Copy2Hash(ExportReport, HashTag):
         "mode": [],
         "home_dir": [],
         "copy_dir": [],
-    }
-
-    def __init__(self, args):
-        """Initialise the class with super."""
-        super().__init__(args)
-        self.args = args
+        }
 
     @staticmethod
     def deconvolute_path(fname):

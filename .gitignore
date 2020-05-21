@@ -11,3 +11,4 @@ test/.DS_Store
 .coverage
 copy_report.json
 test/__pycache__/test_call.cpython-37-pytest-5.4.2.pyc
+test/test_fixer.py
