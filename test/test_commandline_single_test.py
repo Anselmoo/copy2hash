@@ -115,7 +115,7 @@ class TestSingleRuns(object):
     
     def test_move_local_files_directory(self):
         args = {
-            "infile": list(Path("test").glob(".")),
+            "infile": list(Path("test")),
             "report": ["json"],
             "report_name": "copy_report",
             "sha": ["sha256"],
