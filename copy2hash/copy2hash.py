@@ -459,7 +459,7 @@ class Copy2Hash(ExportReport, HashTag):
         """Initialise the class with super."""
         super().__init__(args)
         self.args = args
-        
+
     @staticmethod
     def deconvolute_path(fname):
         """Deconvoulte the filename into the dir, name, ext.
@@ -805,7 +805,7 @@ def command_line_runner(opt=None):
     """
     args = get_args()
 
-    #For pytest
+    # For pytest
     if opt:
         for item, value in opt.items():
             args[item] = value
