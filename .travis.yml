@@ -16,7 +16,7 @@ before_script:
   - pip install black
   - pip install pydocstyle
   # stop the build if there are Python syntax errors or undefined names.
-  - flake8 copy2hash/ --count --max-line-length=88 --ignore=W293,W291,W503 --statisticc
+  - flake8 copy2hash/ --count --max-line-length=88 --ignore=W293,W291,W503 --statistics
   # stop the build if there are Python syntax follows not the black style.
   - black copy2hash/ --check -v
   # exit-zero treats all errors as warnings.
