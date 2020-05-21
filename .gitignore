@@ -1,20 +1,13 @@
 .vscode/settings.json
 example.ipy
-copy2hash/example1.txt
-copy2hash/example2.txt
-copy2hash/example3.npy
-test/test2/__init__.py
-copy2hash/example4
-copy2hash/example5
-copy2hash/dir_nested/dir_sub_1/dir_sub_2/example3.txt
-copy2hash/dir_simple/example1.txt
-copy2hash/dir_simple/example2.txt
 notes
-copy2hash/test2/233/323/33/example7.txt
+dist/*
+copy2hash.egg-info/
+copy2hash/__pycache__/
+build/
 copy2hash/.DS_Store
-copy2hash/dir_nested/dir_sub_1/dir_sub_2/.DS_Store
-copy2hash/dir_simple/.DS_Store
-<<<<<<< HEAD
-copy2hash/test.txt
-=======
->>>>>>> aba0378220ca46a5aa231982cf4c46546e0736bd
+test/.DS_Store
+.DS_Store
+.coverage
+copy_report.json
+test/__pycache__/test_call.cpython-37-pytest-5.4.2.pyc

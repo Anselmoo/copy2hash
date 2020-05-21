@@ -3,7 +3,7 @@
 
 ######################################################
 #
-# copy2hash: - copying or rename files to hash secured
+# copy2hash: - copying or rename files to hash-secured
 # files (sha) via the command line
 # written by Anselm Hahn (Anselm.Hahn@gmail.com)
 #
@@ -12,7 +12,7 @@
 import argparse
 import hashlib as hlib
 from pathlib import Path
-from shutil import copy
+from shutil import copy, SameFileError
 import sys
 
 # imported fileformats
@@ -151,7 +151,7 @@ class ExportReport:
         else:
             fname = Path("./{}".format(self.args["report_name"]))
 
-        for key in self.args["report"].values():
+        for key in self.args["report"]:
             if key == "csv":
                 self.write_csv(copy_dict, fname)
             elif key == "json":
@@ -281,9 +281,9 @@ class HashTag:
     Attributes
     ----------
     hname : str
-        Hash secured filename.
+        hash-secured filename.
     """
-    
+
     hname = str
 
     def __init__(self, args):
@@ -291,15 +291,15 @@ class HashTag:
         self.args = args
 
     @staticmethod
-    def fpath2hash(fpath, key):
+    def fpath2hash(fpath, sha_key):
         """Transform regular expression into hash translated expression.
 
         Parameters
         ----------
         fpath : str
             Final path of the file name.
-        key : str
-            Reference key of the secured hash algorithm.
+        sha_key : str
+            Reference SHA key of the secured hash algorithm.
 
         Returns
         -------
@@ -307,53 +307,65 @@ class HashTag:
             Returns the encoded full path in hexadecimal format.
         """
         fpath_encoded = fpath.encode("utf-8")
-        if key == SHAKeys.sha1:
+        if sha_key == SHAKeys.sha1:
             hcode = hlib.sha1(fpath_encoded)
-        elif key == SHAKeys.sha224:
+            return hcode.hexdigest()
+        elif sha_key == SHAKeys.sha224:
             hcode = hlib.sha224(fpath_encoded)
-        elif key == SHAKeys.sha256:
+            return hcode.hexdigest()
+        elif sha_key == SHAKeys.sha256:
             hcode = hlib.sha256(fpath_encoded)
-        elif key == SHAKeys.sha384:
+            return hcode.hexdigest()
+        elif sha_key == SHAKeys.sha384:
             hcode = hlib.sha384(fpath_encoded)
-        elif key == SHAKeys.sha512:
+            return hcode.hexdigest()
+        elif sha_key == SHAKeys.sha512:
             hcode = hlib.sha512(fpath_encoded)
-        elif key == SHAKeys.blake2b:
+            return hcode.hexdigest()
+        elif sha_key == SHAKeys.blake2b:
             hcode = hlib.blake2b(fpath_encoded)
-        elif key == SHAKeys.blake2s:
+            return hcode.hexdigest()
+        elif sha_key == SHAKeys.blake2s:
             hcode = hlib.blake2s(fpath_encoded)
-        elif key == SHAKeys.md5:
+            return hcode.hexdigest()
+        elif sha_key == SHAKeys.md5:
             hcode = hlib.md5(fpath_encoded)
-        elif key == SHAKeys.sha3_224:
+            return hcode.hexdigest()
+        elif sha_key == SHAKeys.sha3_224:
             hcode = hlib.sha3_224(fpath_encoded)
-        elif key == SHAKeys.sha3_256:
+            return hcode.hexdigest()
+        elif sha_key == SHAKeys.sha3_256:
             hcode = hlib.sha3_256(fpath_encoded)
-        elif key == SHAKeys.sha3_384:
+            return hcode.hexdigest()
+        elif sha_key == SHAKeys.sha3_384:
             hcode = hlib.sha3_384(fpath_encoded)
-        elif key == SHAKeys.sha3_512:
-            hcode = hlib.sha512(fpath_encoded)
-        elif key == SHAKeys.shake_128:
+            return hcode.hexdigest()
+        elif sha_key == SHAKeys.sha3_512:
+            hcode = hlib.sha3_512(fpath_encoded)
+            return hcode.hexdigest()
+        elif sha_key == SHAKeys.shake_128:
             hcode = hlib.shake_128(fpath_encoded)
-        elif key == SHAKeys.shake_256:
+            return hcode.hexdigest(32)
+        elif sha_key == SHAKeys.shake_256:
             hcode = hlib.shake_256(fpath_encoded)
+            return hcode.hexdigest(32)
 
-        return hcode.hexdigest()
-
-    def make_full_hashname(self, hpath, suffix, key):
-        """Make the full hash secured filename.
+    def make_full_hashname(self, hpath, suffix, sha_key):
+        """Make the full hash-secured filename.
 
         Parameters
         ----------
         hpath : str
-            The full hash secured filename.
+            The full hash-secured filename.
         suffix : str
             The standard file-extension.
-        key : str
+        sha_key : str
             SHA-key used as prefix or file-extension. 
 
         Returns
         -------
         hname : str
-            The full hash secured filename with optional suffixes in as prefix or file 
+            The full hash-secured filename with optional suffixes in as prefix or file 
             extension. 
         """
         if self.args["no_file_extension"]:
@@ -364,11 +376,11 @@ class HashTag:
             and not self.args["file_extension"]
             and not self.args["file_suffix"]
         ):
-            return "{}{}".format(hpath, suffix)
+            return "{}.{}".format(hpath, suffix)
         if self.args["file_extension"]:
-            hpath = "{}.{}".format(hpath, key)
+            hpath = "{}.{}".format(hpath, sha_key)
         if self.args["file_suffix"]:
-            hpath = "{}-{}".format(key, hpath)
+            hpath = "{}-{}".format(sha_key, hpath)
         return hpath
 
     def generate_hashname(self, fname, suffix, sha_key):
@@ -380,7 +392,7 @@ class HashTag:
         Parameters
         ----------
         fname : str
-            Filename, which has to be translated to hash secured filename.
+            Filename, which has to be translated to hash-secured filename.
         suffix : str
             File-extension of the filename.
         sha_key : str
@@ -389,7 +401,7 @@ class HashTag:
         Returns
         -------
         hname: str
-            Hash secured filename.
+            hash-secured filename.
         
         Notes
         -----
@@ -410,7 +422,7 @@ class HashTag:
 
 
 class Copy2Hash(ExportReport, HashTag):
-    """Copy or move file(s) to hash secured named file(s).
+    """Copy or move file(s) to hash-secured named file(s).
     
     The Copy2Hash() class is 
 
@@ -420,8 +432,8 @@ class Copy2Hash(ExportReport, HashTag):
         Class for generating the report of the file(s) copying or moving for retracing
         regular filename(s) with the new generated filenames(s)
     HashTag : class
-        Class for generating the hash secured names for the files to copy or moving the 
-        files to hash secured filename(s)
+        Class for generating the hash-secured names for the files to copy or moving the 
+        files to hash-secured filename(s)
     args : dict
             Dictionary of the keywords and values from the parser
     
@@ -493,10 +505,10 @@ class Copy2Hash(ExportReport, HashTag):
         Returns
         -------
         s_ppath: str
-            Standard parents path for copying of moving the hash secured files from 
+            Standard parents path for copying of moving the hash-secured files from 
             './' to './'.
         n_ppath: str, optional
-            New parents path for copying of moving the hash secured files from './' 
+            New parents path for copying of moving the hash-secured files from './' 
             to './directory'.
         """
         directory = args["directory"]
@@ -510,7 +522,7 @@ class Copy2Hash(ExportReport, HashTag):
         return s_ppath.as_posix(), s_ppath.as_posix()
 
     def find_files(self):
-        """Get the file names and save it.
+        """Get the filenames and save it.
 
         find_files() reads the filenames and the working mode to an internal dictionary.
         This is part I of II, because get_hash() has to add the hash-keys according to 
@@ -534,10 +546,10 @@ class Copy2Hash(ExportReport, HashTag):
             self._copy_dir["copy_dir"].append(n_ppath)
 
     def transform_hash(self):
-        """Get the hash secured file names.
+        """Get the hash-secured file names.
 
-        transform_hash() transform the regular filename(s) to a hash secured 
-        filename(s). It adds the new hash secured filename(s) and their export 
+        transform_hash() transform the regular filename(s) to a hash-secured 
+        filename(s). It adds the new hash-secured filename(s) and their export 
         directory to the _copy_dir directory.
 
         Notes
@@ -557,7 +569,7 @@ class Copy2Hash(ExportReport, HashTag):
             self._copy_dir[sha_key] = sha_fname
 
     def copy_files(self):
-        """Copy regular named file(s) to hash secured named file(s)."""
+        """Copy regular named file(s) to hash-secured named file(s)."""
         sha_key_list = list(self._copy_dir.keys())[8:]
 
         for filename, home_path, copy_path in zip(
@@ -585,9 +597,12 @@ class Copy2Hash(ExportReport, HashTag):
                     except IsADirectoryError as e_2:
                         log(msg=f"{e_2}", mode=3)
                         pass
+                    except SameFileError as e_3:
+                        log(msg=f"{e_3} -> will not be replaced!", mode=3)
+                        pass
 
     def move_files(self):
-        """Move regular named file(s) to hash secured named file(s)."""
+        """Move regular named file(s) to hash-secured named file(s)."""
         sha_key_list = list(self._copy_dir.keys())[8:]
         if len(sha_key_list) > 1:
             sha_key = sha_key_list[0]
@@ -648,19 +663,19 @@ class Copy2Hash(ExportReport, HashTag):
 def get_args(opt=None):
     """Get the parser arguments from the command line.
     
-    Parameters
-    ----------
-    opt : dict, optional
-        Optional Dictionary for modifying the parser arguments; default is None.
-    
     Returns
     -------
     args : dict
         Dictionary of the keywords and values from the parser.
+
+    Parameters
+    ----------
+    opt : dict, optional
+        Optional Dictionary for modifying the parser arguments; default is None.
     """
     parser = argparse.ArgumentParser(
         description=(
-            "copy or rename any file(s) to a hash secured filename via " "terminal"
+            "copy or rename any file(s) to a hash-secured filename via terminal"
         )
     )
     # Arguments for loading the data
@@ -771,6 +786,7 @@ def get_args(opt=None):
 
     args = vars(parser.parse_args())
 
+    # For pytest
     if opt:
         for item, value in opt.items():
             args[item] = value
@@ -778,9 +794,20 @@ def get_args(opt=None):
     return args
 
 
-def command_line_runner():
-    """Run bashplot() via command line."""
+def command_line_runner(opt=None):
+    """Run bashplot() via command line.
+    
+    Parameters
+    ----------
+    opt : dict, optional
+        Optional Dictionary for modifying the parser arguments; default is None.
+    """
     args = get_args()
+
+    #For pytest
+    if opt:
+        for item, value in opt.items():
+            args[item] = value
 
     if args["version"]:
         log(__version__)
@@ -790,7 +817,6 @@ def command_line_runner():
         return
 
     if args["directory"]:
-        print(args["directory"])
         args["directory"] = Path(args["directory"])
 
     if not set(args["sha"]).issubset(SHAKeys.__dict__):

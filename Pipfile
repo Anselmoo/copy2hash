@@ -8,6 +8,11 @@ verify_ssl = true
 [packages]
 pyyaml = "*"
 dict2xml = "*"
+pytest = "*"
+coverage = "*"
+pytest-cov = "*"
+pytest-sugar = "*"
+setup-py = "*"
 
 [requires]
 python_version = "3.7"

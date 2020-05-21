@@ -1,0 +1,2 @@
+dict2xml>=1.7.0
+PyYAML>=5.3.1
