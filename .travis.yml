@@ -31,7 +31,6 @@ before_script:
   - pip install coverage
   - pip install codecov
   
-
 # command to run tests
 script:
   - coverage run -m pytest
