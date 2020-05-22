@@ -308,6 +308,7 @@ class HashTag:
         """
         fpath_encoded = fpath.encode("utf-8")
         if sha_key == SHAKeys.sha1:
+            #  deepcode ignore insecureHash: <because the option is needed>
             hcode = hlib.sha1(fpath_encoded)
             return hcode.hexdigest()
         elif sha_key == SHAKeys.sha224:
@@ -329,6 +330,7 @@ class HashTag:
             hcode = hlib.blake2s(fpath_encoded)
             return hcode.hexdigest()
         elif sha_key == SHAKeys.md5:
+            #  deepcode ignore insecureHash: <because the option is needed>
             hcode = hlib.md5(fpath_encoded)
             return hcode.hexdigest()
         elif sha_key == SHAKeys.sha3_224:
@@ -444,21 +446,20 @@ class Copy2Hash(ExportReport, HashTag):
        after cleaning this dictionary will be used for generating the report. 
     """
 
-    _copy_dir = {
-        "index": [],
-        "filename": [],
-        "ppath": [],
-        "fpath": [],
-        "suffix": [],
-        "mode": [],
-        "home_dir": [],
-        "copy_dir": [],
-    }
-
     def __init__(self, args):
         """Initialise the class with super."""
         super().__init__(args)
         self.args = args
+        self._copy_dir = {
+            "index": [],
+            "filename": [],
+            "ppath": [],
+            "fpath": [],
+            "suffix": [],
+            "mode": [],
+            "home_dir": [],
+            "copy_dir": [],
+        }
 
     @staticmethod
     def deconvolute_path(fname):
@@ -608,7 +609,7 @@ class Copy2Hash(ExportReport, HashTag):
             sha_key = sha_key_list[0]
             log("SHA key list is >1; only the first will be picked!", 3)
         else:
-            sha_key = sha_key_list
+            sha_key = sha_key_list[0]
         for filename, home_path, move_path in zip(
             self._copy_dir["filename"],
             self._copy_dir["home_dir"],

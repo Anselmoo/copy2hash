@@ -11,3 +11,11 @@ test/.DS_Store
 .coverage
 copy_report.json
 test/__pycache__/test_call.cpython-37-pytest-5.4.2.pyc
+test/test_fixer.py
+test/sha256-c197a31bc7f554062d9e1df215afac2f6534a64d5606edbfc7277c905ca8f479.sha256
+test/sha256-e2ad1a2351235418e1003bfbbd3351561561ebaf5f20d1302f9bdb374d9fc767.sha256
+copy_report.csv
+copy_report.pkl
+copy_report.xml
+copy_report.txt
+copy_report.yaml

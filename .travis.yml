@@ -16,13 +16,13 @@ before_script:
   - pip install black
   - pip install pydocstyle
   # stop the build if there are Python syntax errors or undefined names.
-  - flake8 copy2hash/ --count --max-line-length=88 --ignore=W293,W291,W503 --statisticc
+  - flake8 copy2hash/ --count --max-line-length=88 --ignore=W293,W291,W503 --statistics
   # stop the build if there are Python syntax follows not the black style.
   - black copy2hash/ --check -v
   # exit-zero treats all errors as warnings.
   - flake8 . --count --exit-zero --max-complexity=10 --statistics
   # stop if doc-string is broken in bashplot.
-  - pydocstyle --convention=numpy -e copy2bash/copy2bash.py
+  - pydocstyle -e -s copy2bash/
   # install bashplot
   - python setup.py install
   # install pytest, coverage, and codecov for report
@@ -44,3 +44,6 @@ notifications:
   slack:
     on_success: always
     on_failure: always
+  email:
+    on_success: always # default: change
+    on_failure: always # default: always
