@@ -5,7 +5,7 @@
 [![GitHub](https://img.shields.io/github/license/Anselmoo/copy2hash?logo=GitHub)](https://github.com/Anselmoo/copy2hash/blob/master/LICENSE)
 
 [![Build Status](https://dev.azure.com/anselmhahn/anselmhahn/_apis/build/status/Anselmoo.copy2hash?branchName=master)](https://dev.azure.com/anselmhahn/anselmhahn/_build/latest?definitionId=5&branchName=master)
-[![Azure DevOps coverage](https://img.shields.io/azure-devops/coverage/anselmhahn/anselmhahn/5?logo=Azure-Devops&logoColor=blue)](https://dev.azure.com/anselmhahn/anselmhahn/_build/latest?definitionId=5&branchName=master
+[![Azure DevOps coverage](https://img.shields.io/azure-devops/coverage/anselmhahn/anselmhahn/5?logo=Azure-Devops&logoColor=blue)](https://dev.azure.com/anselmhahn/anselmhahn/_build/latest?definitionId=5&branchName=master)
 
 # copy2hash
 
