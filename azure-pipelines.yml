@@ -43,7 +43,7 @@ steps:
     pip install pytest-sugar
     pip install pytest-cov
     pip install pytest-azurepipelines
-    pytest test --doctest-modules --junitxml=junit/test-results.xml --cov=. --cov-report=xml --cov-report=html
+    pytest test/ --junitxml=junit/test-results.xml --cov=copy2hash --cov-report=xml --cov-report=html
   displayName: 'Test with pytest and pytest-coverage'
 
 - task: PublishTestResults@2
