@@ -44,11 +44,11 @@ steps:
     pip install coverage
   displayName: 'Install pytest and coverage'
 
-  - script: |
+- script: |
     pytest --junit-xml=junit/test-results.xml
   displayName: 'Separated Unit-test for Artefact'
 
--script: |
+- script: |
     coverage run -m pytest
     coverage report -m
     coverage html
