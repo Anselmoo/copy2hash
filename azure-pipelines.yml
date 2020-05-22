@@ -55,7 +55,7 @@ steps:
     summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/coverage.xml'
     reportDirectory: '$(System.DefaultWorkingDirectory)/**/htmlcov'
 
-- scrip: pytest --junitxml=junit/test-results.xml
+- script: pytest --junitxml=junit/test-results.xml
 
 - task: PublishTestResults@2
   condition: succeededOrFailed()
