@@ -93,7 +93,7 @@ class TestSingleRuns(object):
         copy2hash.command_line_runner(opt=args)
 
         assert 1
-    
+
     def test_move_local_files(self):
         args = {
             "infile": list(Path("test").glob("example1.txt")),
@@ -112,29 +112,10 @@ class TestSingleRuns(object):
         copy2hash.command_line_runner(opt=args)
 
         assert 1
-    
-    def test_move_local_files_directory(self):
-        args = {
-            "infile": list(Path("test").glob(".")),
-            "report": ["json"],
-            "report_name": "copy_report",
-            "sha": ["sha256"],
-            "directory": None,
-            "move": True,
-            "file_extension": False,
-            "file_suffix": False,
-            "no_file_extension": False,
-            "verbose": True,
-            "version": False,
-        }
 
-        copy2hash.command_line_runner(opt=args)
-
-        assert 1
-    
     def test_local_wrong_sha(self):
         args = {
-            "infile": list(Path("test").glob("*.txt")),
+            "infile": ["."],
             "report": ["json"],
             "report_name": "copy_report",
             "sha": ["sha713"],
