@@ -7,6 +7,8 @@
 [![Build Status](https://dev.azure.com/anselmhahn/anselmhahn/_apis/build/status/Anselmoo.copy2hash?branchName=master)](https://dev.azure.com/anselmhahn/anselmhahn/_build/latest?definitionId=5&branchName=master)
 [![Azure DevOps coverage](https://img.shields.io/azure-devops/coverage/anselmhahn/anselmhahn/5?logo=Azure-Devops&logoColor=blue)](https://dev.azure.com/anselmhahn/anselmhahn/_build/latest?definitionId=5&branchName=master)
 
+[![PyPI](https://img.shields.io/pypi/v/copy2hash?logo=pypi&logoColor=yellow)](https://pypi.org/project/copy2hash/)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/copy2hash?logo=python&logoColor=yellow)](https://pypi.org/project/copy2hash/)
 # copy2hash
 
 ## Copy or rename any file(s) to a _hash-secured_ filename via terminal
