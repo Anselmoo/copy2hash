@@ -1,15 +1,17 @@
 # copy2hash
 
 ## Copy or rename any file(s) to a _hash-secured_ filename via terminal
+
 ---
 
 `copy2hash` copies or renames file(s) with regular titles to file(s) with a _hash-secured_ title by using the terminal or in `python`-framework. Having unique filenames is essential for the correct indexing of databases, especially if the data come from different pipelines. Also, it is important if the filename or/and directory contains _meta_-information, which extend the length of the valid file lengths.
 
-Having *regular*-filename pairs such as `example.input` &rlarr; `example.output` can brings very fast confusion and makes analysis of data very confusing. The secured hash algorithms (**SHA**) [1-5] in `copy2hash` provides a safe way to generate distinguishable filenames like:
+Having _regular_-filename pairs such as `example.input` &rlarr; `example.output` can brings very fast confusion and makes analysis of data very confusing. The secured hash algorithms (**SHA**) [1-5] in `copy2hash` provides a safe way to generate distinguishable filenames like:
 
-`example.input` &rlarr; `example.output`  &xrarr; `7e2229daab26b247b877565505b6aaf131014f2cb64e4c4ca796fbe0dc2fadc4.input` &rlarr; `4bd077ed771af9ad97e3f2dc45583a14af014ebafb73a846f2436a168ae3eafa.output`
+`example.input` &rlarr; `example.output` &xrarr; `7e2229daab26b247b877565505b6aaf131014f2cb64e4c4ca796fbe0dc2fadc4.input` &rlarr; `4bd077ed771af9ad97e3f2dc45583a14af014ebafb73a846f2436a168ae3eafa.output`
 
 The following **SHA** algorithms [1-5] are available:
+
 1. `sha1`
 2. `sha224`
 3. `sha256`
@@ -25,16 +27,17 @@ The following **SHA** algorithms [1-5] are available:
 13. `shake_128` with fixed `32` character length
 14. `shake_256` with fixed `32` character length
 
-and the copied or moved processed will be automatically logged as: 
- 1. `*.csv`-file:
- 2. `*.json`-file
- 3. `*.pkl`-file
- 4. `*.txt`-file
- 5. `*.yaml`-file
- 6. `*.xml`-file
+and the copied or moved processed will be automatically logged as:
 
+1.  `*.csv`-file:
+2.  `*.json`-file
+3.  `*.pkl`-file
+4.  `*.txt`-file
+5.  `*.yaml`-file
+6.  `*.xml`-file
 
 ## Installation
+
 ---
 
 `pip install copy2hash`
@@ -51,6 +54,7 @@ python setup.py install
 ```
 
 ## Requirments
+
 ---
 
 1.  Python3 >= 3.6
@@ -58,7 +62,9 @@ python setup.py install
 3.  [PyYAML>=5.3.1](https://github.com/yaml/pyyaml)
 
 ## Usage
+
 ---
+
 ```bash
 ╰─ copy2hash * -h
 usage: copy2hash [-h] [-r [REPORT [REPORT ...]]] [-rn REPORT_NAME]
@@ -115,94 +121,80 @@ optional arguments:
 ```
 
 ## Other Examples
+
 ---
 
-For keeping the regular file-extension, use: 
+For keeping the regular file-extension, use:
 
-```copy2hash * -r json csv yaml```
+`copy2hash * -r json csv yaml`
 
-|*regular*-filename||*sha256*-filename|
-|---|---|---|
-|`example.out`|&rarr;|`c8e1f67ad67b8f456afe76b5eb5d6dd0a919b1537cd67b9419f86158e4d9c1b4.out`|
-|`example.t`|&rarr;|`97c7bc3705df72f76cf3d3d55228751bc6895a488fb004b112914d4a05447c16.t`|
-|`example.tx`|&rarr;|`11297eae82d7866c4dd42e79b8082a5256fa3d54e7e1bf60ab87747e9b664303.tx`|
-|`example.txt`|&rarr;|`e7cb632359a2be17c1008b50f9ec85691cd5d66834d5fe8f63ef65ceb06682ee.txt`|
-|`example_1.txt`|&rarr;|`85a6fae2fca1342a85222088ff0342cbea8222e4140aba96690691c9d58e5786.txt`|
-|`example_2.txt`|&rarr;|`0329cb55ddfab933d9753686ddb193148003611df672a4a41aad014ead4767f9.txt`|
-|`example_l.txt`|&rarr;|`eb4d990362cbf5cccd0b49374b71ca3f799c7262352c9fda7ba875ba034f7168.txt`|
+| _regular_-filename |        | _sha256_-filename                                                      |
+| ------------------ | ------ | ---------------------------------------------------------------------- |
+| `example.out`      | &rarr; | `c8e1f67ad67b8f456afe76b5eb5d6dd0a919b1537cd67b9419f86158e4d9c1b4.out` |
+| `example.t`        | &rarr; | `97c7bc3705df72f76cf3d3d55228751bc6895a488fb004b112914d4a05447c16.t`   |
+| `example.tx`       | &rarr; | `11297eae82d7866c4dd42e79b8082a5256fa3d54e7e1bf60ab87747e9b664303.tx`  |
+| `example.txt`      | &rarr; | `e7cb632359a2be17c1008b50f9ec85691cd5d66834d5fe8f63ef65ceb06682ee.txt` |
+| `example_1.txt`    | &rarr; | `85a6fae2fca1342a85222088ff0342cbea8222e4140aba96690691c9d58e5786.txt` |
+| `example_2.txt`    | &rarr; | `0329cb55ddfab933d9753686ddb193148003611df672a4a41aad014ead4767f9.txt` |
+| `example_l.txt`    | &rarr; | `eb4d990362cbf5cccd0b49374b71ca3f799c7262352c9fda7ba875ba034f7168.txt` |
 
 Removing the regular file-extension and adding the SHA-key in front, use:
 
-```copy2hash * -r json csv yaml -sxt```
+`copy2hash * -r json csv yaml -sxt`
 
-|*regular*-filename||*sha256*-filename|
-|---|---|---|
-|`example.out`|&rarr;|`sha256-c8e1f67ad67b8f456afe76b5eb5d6dd0a919b1537cd67b9419f86158e4d9c1b4`|
-|`example.t`|&rarr;|`sha256-97c7bc3705df72f76cf3d3d55228751bc6895a488fb004b112914d4a05447c16`|
-|`example.tx`|&rarr;|`sha256-11297eae82d7866c4dd42e79b8082a5256fa3d54e7e1bf60ab87747e9b664303`|
-|`example.txt`|&rarr;|`sha256-e7cb632359a2be17c1008b50f9ec85691cd5d66834d5fe8f63ef65ceb06682ee`|
-|`example_1.txt`|&rarr;|`sha256-85a6fae2fca1342a85222088ff0342cbea8222e4140aba96690691c9d58e5786`|
-|`example_2.txt`|&rarr;|`sha256-0329cb55ddfab933d9753686ddb193148003611df672a4a41aad014ead4767f9`|
-|`example_l.txt`|&rarr;|`sha256-eb4d990362cbf5cccd0b49374b71ca3f799c7262352c9fda7ba875ba034f7168`|
-
+| _regular_-filename |        | _sha256_-filename                                                         |
+| ------------------ | ------ | ------------------------------------------------------------------------- |
+| `example.out`      | &rarr; | `sha256-c8e1f67ad67b8f456afe76b5eb5d6dd0a919b1537cd67b9419f86158e4d9c1b4` |
+| `example.t`        | &rarr; | `sha256-97c7bc3705df72f76cf3d3d55228751bc6895a488fb004b112914d4a05447c16` |
+| `example.tx`       | &rarr; | `sha256-11297eae82d7866c4dd42e79b8082a5256fa3d54e7e1bf60ab87747e9b664303` |
+| `example.txt`      | &rarr; | `sha256-e7cb632359a2be17c1008b50f9ec85691cd5d66834d5fe8f63ef65ceb06682ee` |
+| `example_1.txt`    | &rarr; | `sha256-85a6fae2fca1342a85222088ff0342cbea8222e4140aba96690691c9d58e5786` |
+| `example_2.txt`    | &rarr; | `sha256-0329cb55ddfab933d9753686ddb193148003611df672a4a41aad014ead4767f9` |
+| `example_l.txt`    | &rarr; | `sha256-eb4d990362cbf5cccd0b49374b71ca3f799c7262352c9fda7ba875ba034f7168` |
 
 ### More Examples
 
-
 Generate a report in the `json`- and `yaml`-format:
 
-```copy2hash example.input example.output -r json yaml```
+`copy2hash example.input example.output -r json yaml`
 
 ```json
 {
-    "index": [
-        0,
-        1
-    ],
-    "filename": [
-        "example.input",
-        "example.output"
-    ],
-    "mode": [
-        "copy",
-        "copy"
-    ],
-    "home_dir": [
-        ".",
-        "."
-    ],
-    "copy_dir": [
-        ".",
-        "."
-    ],
-    "sha256": [
-        "7e2229daab26b247b877565505b6aaf131014f2cb64e4c4ca796fbe0dc2fadc4.input",
-        "4bd077ed771af9ad97e3f2dc45583a14af014ebafb73a846f2436a168ae3eafa.output"
-    ]
+  "index": [0, 1],
+  "filename": ["example.input", "example.output"],
+  "mode": ["copy", "copy"],
+  "home_dir": [".", "."],
+  "copy_dir": [".", "."],
+  "sha256": [
+    "7e2229daab26b247b877565505b6aaf131014f2cb64e4c4ca796fbe0dc2fadc4.input",
+    "4bd077ed771af9ad97e3f2dc45583a14af014ebafb73a846f2436a168ae3eafa.output"
+  ]
 }
 ```
 
 ```yaml
 copy_dir:
-- .
-- .
+  - .
+  - .
 filename:
-- example.input
-- example.output
+  - example.input
+  - example.output
 home_dir:
-- .
-- .
+  - .
+  - .
 index:
-- 0
-- 1
+  - 0
+  - 1
 mode:
-- copy
-- copy
+  - copy
+  - copy
 sha256:
-- 7e2229daab26b247b877565505b6aaf131014f2cb64e4c4ca796fbe0dc2fadc4.input
-- 4bd077ed771af9ad97e3f2dc45583a14af014ebafb73a846f2436a168ae3eafa.output
+  - 7e2229daab26b247b877565505b6aaf131014f2cb64e4c4ca796fbe0dc2fadc4.input
+  - 4bd077ed771af9ad97e3f2dc45583a14af014ebafb73a846f2436a168ae3eafa.output
 ```
+
 ## Using as Built-in
+
 ---
 
 ```python
@@ -225,24 +217,29 @@ args = {
 
 copy2hash.command_line_runner(opt=args)
 ```
+
 ## Author
+
 ---
 
 - [Anselm Hahn](https://github.com/Anselmoo)
 
 ## Contributions
+
 ---
 
 I'm happy to accept how to improve batchplot; please forward your [issues](https://github.com/Anselmoo/copy2hash/issues) or [pull requests](https://github.com/Anselmoo/copy2hash/pulls).
 
-Keep in mind that [pull requests](https://github.com/Anselmoo/bashplot/pulls) have to pass TravisCI in combination with [flake8](https://github.com/PyCQA/flake8), [black](https://github.com/psf/black), and [pydocstyle](https://github.com/PyCQA/pydocstyle).
+Keep in mind that [pull requests](https://github.com/Anselmoo/copy2hash/pulls) have to pass TravisCI in combination with [flake8](https://github.com/PyCQA/flake8), [black](https://github.com/psf/black), and [pydocstyle](https://github.com/PyCQA/pydocstyle).
 
 ## License
+
 ---
 
-The source code of `bashplot` is licensed under the [MIT license](https://github.com/Anselmoo/copy2hash/blob/master/LICENSE).
+The source code of `copy2hash` is licensed under the [MIT license](https://github.com/Anselmoo/copy2hash/blob/master/LICENSE).
 
 ## References
+
 ---
 
 1.  https://docs.python.org/3/library/hashlib.html
