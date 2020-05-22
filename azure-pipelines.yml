@@ -45,10 +45,6 @@ steps:
   displayName: 'Install pytest and coverage'
 
 - script: |
-    pytest --junit-xml=junit/test-results.xml
-  displayName: 'Separated Unit-test for Artefact'
-
-- script: |
     coverage run -m pytest
     coverage report -m
     coverage html
@@ -61,8 +57,3 @@ steps:
     summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/coverage.xml'
     reportDirectory: '$(System.DefaultWorkingDirectory)/**/htmlcov'
 
-- task: PublishTestResults@2
-  condition: succeededOrFailed()
-  inputs:
-    testResultsFiles: '**/test-*.xml'
-    testRunTitle: 'Publish test results for Python $(python.version)'
