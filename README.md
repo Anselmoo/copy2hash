@@ -3,6 +3,10 @@
 [![CodeFactor Grade](https://img.shields.io/codefactor/grade/github/Anselmoo/copy2hash/master?logo=Codecov)](https://www.codefactor.io/repository/github/anselmoo/copy2hash)
 [![Code Style: Black](https://img.shields.io/badge/code%20style-black-black.svg)](https://github.com/ambv/black)
 [![GitHub](https://img.shields.io/github/license/Anselmoo/copy2hash?logo=GitHub)](https://github.com/Anselmoo/copy2hash/blob/master/LICENSE)
+
+[![Build Status](https://dev.azure.com/anselmhahn/anselmhahn/_apis/build/status/Anselmoo.copy2hash?branchName=master)](https://dev.azure.com/anselmhahn/anselmhahn/_build/latest?definitionId=5&branchName=master)
+[![Azure DevOps coverage](https://img.shields.io/azure-devops/coverage/anselmhahn/anselmhahn/5?logo=Azure-Devops&logoColor=blue)](https://dev.azure.com/anselmhahn/anselmhahn/_build/latest?definitionId=5&branchName=master
+
 # copy2hash
 
 ## Copy or rename any file(s) to a _hash-secured_ filename via terminal
