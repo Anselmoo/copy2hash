@@ -22,6 +22,25 @@ class TestSingleRuns(object):
 
         assert 1
 
+    def test_copy_file_not_exist(self):
+        args = {
+            "infile": list(Path("test").glob("file_not_exist.txt")),
+            "report": ["json"],
+            "report_name": "copy_report",
+            "sha": ["sha256"],
+            "directory": "home_home",
+            "move": False,
+            "file_extension": False,
+            "file_suffix": False,
+            "no_file_extension": False,
+            "verbose": True,
+            "version": False,
+        }
+
+        copy2hash.command_line_runner(opt=args)
+
+        assert 1
+
     def test_local_specific_files(self):
         args = {
             "infile": list(Path("test").glob("*.txt")),
@@ -93,6 +112,25 @@ class TestSingleRuns(object):
         copy2hash.command_line_runner(opt=args)
 
         assert 1
+    
+    def test_move_file_not_exist(self):
+        args = {
+            "infile": list(Path("test").glob("file_not_exist.txt")),
+            "report": ["json"],
+            "report_name": "copy_report",
+            "sha": ["sha256"],
+            "directory": None,
+            "move": True,
+            "file_extension": False,
+            "file_suffix": False,
+            "no_file_extension": False,
+            "verbose": True,
+            "version": False,
+        }
+
+        copy2hash.command_line_runner(opt=args)
+
+        assert 1
 
     def test_move_local_files(self):
         args = {
@@ -100,6 +138,25 @@ class TestSingleRuns(object):
             "report": ["json"],
             "report_name": "copy_report",
             "sha": ["sha256"],
+            "directory": None,
+            "move": True,
+            "file_extension": False,
+            "file_suffix": False,
+            "no_file_extension": False,
+            "verbose": True,
+            "version": False,
+        }
+
+        copy2hash.command_line_runner(opt=args)
+
+        assert 1
+
+    def test_move_local_files(self):
+        args = {
+            "infile": list(Path("test").glob("example2.txt")),
+            "report": ["json"],
+            "report_name": "copy_report",
+            "sha": ["sha256", "md5"],
             "directory": None,
             "move": True,
             "file_extension": False,
