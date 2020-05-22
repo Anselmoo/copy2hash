@@ -132,7 +132,7 @@ class TestSingleRuns(object):
 
         assert 1
 
-    def test_move_local_files(self):
+    def test_move_local_files_i(self):
         args = {
             "infile": list(Path("test").glob("example1.txt")),
             "report": ["json"],
@@ -151,7 +151,7 @@ class TestSingleRuns(object):
 
         assert 1
 
-    def test_move_local_files(self):
+    def test_move_local_files_ii(self):
         args = {
             "infile": list(Path("test").glob("example2.txt")),
             "report": ["json"],
