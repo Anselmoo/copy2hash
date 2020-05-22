@@ -43,20 +43,22 @@ steps:
     pip install pytest-sugar
     pip install coverage
     pip install pytest-azurepipelines
-    coverage run -m pytest --junitxml=junit/test-results.xml
+    coverage run -m pytest
     coverage report -m
     coverage html
     coverage xml
   displayName: 'Test with pytest and coverage'
-
-- task: PublishTestResults@2
-  condition: succeededOrFailed()
-  inputs:
-    testResultsFiles: '**/test-*.xml'
-    testRunTitle: 'Publish test results for Python $(python.version)'
 
 - task: PublishCodeCoverageResults@1
   inputs:
     codeCoverageTool: Cobertura
     summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/coverage.xml'
     reportDirectory: '$(System.DefaultWorkingDirectory)/**/htmlcov'
+
+- scrip: pytest --junitxml=junit/test-results.xml
+
+- task: PublishTestResults@2
+  condition: succeededOrFailed()
+  inputs:
+    testResultsFiles: '**/test-*.xml'
+    testRunTitle: 'Publish test results for Python $(python.version)'
