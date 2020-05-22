@@ -42,8 +42,14 @@ steps:
     pip install pytest
     pip install pytest-sugar
     pip install coverage
-    pip install pytest-azurepipelines
-    coverage run -m pytest --junit-xml=junit/test-results.xml
+  displayName: 'Install pytest and coverage'
+
+  - script: |
+    pytest --junit-xml=junit/test-results.xml
+  displayName: 'Separated Unit-test for Artefact'
+
+-script: |
+    coverage run -m pytest
     coverage report -m
     coverage html
     coverage xml

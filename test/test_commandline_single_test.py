@@ -134,7 +134,7 @@ class TestSingleRuns(object):
 
     def test_move_local_files_i(self):
         args = {
-            "infile": list(Path("test").glob("example1.txt")),
+            "infile": list(Path("test").glob("example1.mov")),
             "report": ["json"],
             "report_name": "copy_report",
             "sha": ["sha256"],
@@ -153,7 +153,7 @@ class TestSingleRuns(object):
 
     def test_move_local_files_ii(self):
         args = {
-            "infile": list(Path("test").glob("example2.txt")),
+            "infile": list(Path("test").glob("example2.mov")),
             "report": ["json"],
             "report_name": "copy_report",
             "sha": ["sha256", "md5"],
