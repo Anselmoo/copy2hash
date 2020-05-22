@@ -1,3 +1,8 @@
+[![Travis (.com)](https://img.shields.io/travis/com/Anselmoo/copy2hash?logo=travis)](https://travis-ci.com/github/Anselmoo/copy2hash)
+[![Codecov](https://img.shields.io/codecov/c/github/Anselmoo/copy2hash?logo=Codecov)](https://codecov.io/gh/Anselmoo/copy2hash)
+[![CodeFactor Grade](https://img.shields.io/codefactor/grade/github/Anselmoo/copy2hash/master?logo=Codecov)](https://www.codefactor.io/repository/github/anselmoo/copy2hash)
+[![Code Style: Black](https://img.shields.io/badge/code%20style-black-black.svg)](https://github.com/ambv/black)
+[![GitHub](https://img.shields.io/github/license/Anselmoo/copy2hash?logo=GitHub)](https://github.com/Anselmoo/copy2hash/blob/master/LICENSE)
 # copy2hash
 
 ## Copy or rename any file(s) to a _hash-secured_ filename via terminal
