@@ -1,3 +1,7 @@
+os:
+  # testing both os
+  - linux
+  - osx
 language: python
 cache: pip
 matrix:
