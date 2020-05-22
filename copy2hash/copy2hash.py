@@ -308,6 +308,7 @@ class HashTag:
         """
         fpath_encoded = fpath.encode("utf-8")
         if sha_key == SHAKeys.sha1:
+            #  deepcode ignore insecureHash: <because the option is needed>
             hcode = hlib.sha1(fpath_encoded)
             return hcode.hexdigest()
         elif sha_key == SHAKeys.sha224:
