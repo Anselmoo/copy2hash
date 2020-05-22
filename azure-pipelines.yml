@@ -47,7 +47,7 @@ steps:
     coverage report -m
     coverage html
     coverage xml
-  displayName: 'Test with pytest and pytest-coverage'
+  displayName: 'Test with pytest and coverage'
 
 - task: PublishTestResults@2
   condition: succeededOrFailed()
