@@ -1,5 +1,6 @@
 # TODO
 ---
 
- - [ ] Generate unique **sha-keys** by incoperating the time or other meta-data
+ - [ ] Generate unique **sha-keys** by incoperating a time-stamp 
+ - [ ] Generate unique **sha-keys** by incoperating a meta-data like the *parents-path*
  - [ ] Double generated **sha-keys** 
