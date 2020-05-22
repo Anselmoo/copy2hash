@@ -330,6 +330,7 @@ class HashTag:
             hcode = hlib.blake2s(fpath_encoded)
             return hcode.hexdigest()
         elif sha_key == SHAKeys.md5:
+            #  deepcode ignore insecureHash: <because the option is needed>
             hcode = hlib.md5(fpath_encoded)
             return hcode.hexdigest()
         elif sha_key == SHAKeys.sha3_224:
