@@ -15,7 +15,7 @@
 
 ---
 
-`copy2hash` copies or renames file(s) with regular titles to file(s) with a _hash-secured_ title by using the terminal or in `python`-framework. Having unique filenames is essential for the correct indexing of databases, especially if the data come from different pipelines. Also, it is important if the filename or/and directory contains _meta_-information, which extend the length of the valid file lengths.
+`copy2hash` copies or renames file(s) with regular titles to file(s) with a _hash-secured_ title by using the terminal or in `python`-framework. Having unique filenames is essential for the correct indexing of databases, especially if the data come from different pipelines. Also, it is important if the filename or/and directory contains _meta_-information, which extends the length of the valid file lengths.
 
 Having _regular_-filename pairs such as `example.input` &rlarr; `example.output` can brings very fast confusion and makes analysis of data very confusing. The secured hash algorithms (**SHA**) [1-5] in `copy2hash` provides a safe way to generate distinguishable filenames like:
 
