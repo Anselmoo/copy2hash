@@ -21,9 +21,9 @@ before_script:
   - black copy2hash/ --check -v
   # exit-zero treats all errors as warnings.
   - flake8 . --count --exit-zero --max-complexity=10 --statistics
-  # stop if doc-string is broken in bashplot.
+  # stop if doc-string is broken in copy2hash.
   - pydocstyle -e -s copy2bash/
-  # install bashplot
+  # install copy2hash
   - python setup.py install
   # install pytest, coverage, and codecov for report
   - pip install pytest
