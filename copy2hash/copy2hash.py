@@ -373,11 +373,7 @@ class HashTag:
         if self.args["no_file_extension"]:
             return hpath
 
-        if (
-            not self.args["no_file_extension"]
-            and not self.args["file_extension"]
-            and not self.args["file_suffix"]
-        ):
+        if not self.args["file_extension"] and not self.args["file_suffix"]:
             return "{}{}".format(hpath, suffix)
         if self.args["file_extension"]:
             hpath = "{}.{}".format(hpath, sha_key)
@@ -594,22 +590,17 @@ class Copy2Hash(ExportReport, HashTag):
                             )
                     except FileNotFoundError as e_1:
                         log(msg=f"{e_1}", mode=3)
-                        pass
                     except IsADirectoryError as e_2:
                         log(msg=f"{e_2}", mode=3)
-                        pass
                     except SameFileError as e_3:
                         log(msg=f"{e_3} -> will not be replaced!", mode=3)
-                        pass
 
     def move_files(self):
         """Move regular named file(s) to hash-secured named file(s)."""
         sha_key_list = list(self._copy_dir.keys())[8:]
+        sha_key = sha_key_list[0]
         if len(sha_key_list) > 1:
-            sha_key = sha_key_list[0]
             log("SHA key list is >1; only the first will be picked!", 3)
-        else:
-            sha_key = sha_key_list[0]
         for filename, home_path, move_path in zip(
             self._copy_dir["filename"],
             self._copy_dir["home_dir"],
@@ -629,10 +620,8 @@ class Copy2Hash(ExportReport, HashTag):
                         )
                 except FileNotFoundError as e_1:
                     log(msg=f"{e_1}", mode=3)
-                    pass
                 except IsADirectoryError as e_2:
                     log(msg=f"{e_2}", mode=3)
-                    pass
 
     def clean_dict(self):
         """Remove unnecessary entries in the dictionary."""
