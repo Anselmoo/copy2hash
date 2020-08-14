@@ -592,15 +592,10 @@ class Copy2Hash(ExportReport, HashTag):
                                 ),
                                 2,
                             )
-                    except FileNotFoundError as e_1:
+                    except (FileNotFoundError, IsADirectoryError) as e_1:
                         log(msg=f"{e_1}", mode=3)
-                        pass
-                    except IsADirectoryError as e_2:
-                        log(msg=f"{e_2}", mode=3)
-                        pass
-                    except SameFileError as e_3:
-                        log(msg=f"{e_3} -> will not be replaced!", mode=3)
-                        pass
+                    except SameFileError as e_2:
+                        log(msg=f"{e_2} -> will not be replaced!", mode=3)
 
     def move_files(self):
         """Move regular named file(s) to hash-secured named file(s)."""
@@ -609,7 +604,7 @@ class Copy2Hash(ExportReport, HashTag):
             sha_key = sha_key_list[0]
             log("SHA key list is >1; only the first will be picked!", 3)
         else:
-            sha_key = sha_key_list[0]
+            sha_key = sha_key_list
         for filename, home_path, move_path in zip(
             self._copy_dir["filename"],
             self._copy_dir["home_dir"],
@@ -627,12 +622,8 @@ class Copy2Hash(ExportReport, HashTag):
                             ),
                             2,
                         )
-                except FileNotFoundError as e_1:
+                except (FileNotFoundError, IsADirectoryError) as e_1:
                     log(msg=f"{e_1}", mode=3)
-                    pass
-                except IsADirectoryError as e_2:
-                    log(msg=f"{e_2}", mode=3)
-                    pass
 
     def clean_dict(self):
         """Remove unnecessary entries in the dictionary."""
