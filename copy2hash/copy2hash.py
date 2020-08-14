@@ -600,11 +600,10 @@ class Copy2Hash(ExportReport, HashTag):
     def move_files(self):
         """Move regular named file(s) to hash-secured named file(s)."""
         sha_key_list = list(self._copy_dir.keys())[8:]
+        sha_key = sha_key_list[0]
         if len(sha_key_list) > 1:
-            sha_key = sha_key_list[0]
             log("SHA key list is >1; only the first will be picked!", 3)
-        else:
-            sha_key = sha_key_list
+
         for filename, home_path, move_path in zip(
             self._copy_dir["filename"],
             self._copy_dir["home_dir"],
