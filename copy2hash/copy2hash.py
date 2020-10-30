@@ -351,6 +351,8 @@ class HashTag:
         elif sha_key == SHAKeys.shake_256:
             hcode = hlib.shake_256(fpath_encoded)
             return hcode.hexdigest(32)
+        else:
+            sys.exit(1)
 
     def make_full_hashname(self, hpath, suffix, sha_key):
         """Make the full hash-secured filename.
