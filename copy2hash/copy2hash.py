@@ -197,9 +197,8 @@ class ExportReport:
             Filename of the report.
         """
         json_file = json.dumps(copy_dict, indent=4)
-        f = open(f"{fname}.json", "w+")
-        f.write(json_file)
-        f.close()
+        with open(f"{fname}.json", "w+") as f:
+            f.write(json_file)
 
     @staticmethod
     def write_pickle(copy_dict, fname):
@@ -213,9 +212,8 @@ class ExportReport:
         fname : str
             Filename of the report.
         """
-        f = open(f"{fname}.pkl", "wb+")
-        pickle.dump(copy_dict, f)
-        f.close()
+        with open(f"{fname}.pkl", "wb+") as f:
+            pickle.dump(copy_dict, f)
 
     @staticmethod
     def write_txt(copy_dict, fname, fxt="txt"):
@@ -249,9 +247,8 @@ class ExportReport:
             Filename of the report.
         """
         yaml_file = yaml.dump(copy_dict, indent=4)
-        f = open(f"{fname}.yaml", "w+")
-        f.write(yaml_file)
-        f.close()
+        with open(f"{fname}.yaml", "w+") as f:
+            f.write(yaml_file)
 
     @staticmethod
     def write_xml(copy_dict, fname):
@@ -265,9 +262,8 @@ class ExportReport:
         fname : str
             Filename of the report.
         """
-        f = open(f"{fname}.xml", "w+")
-        f.write(dict2xml(copy_dict, wrap="all", indent="  "))
-        f.close()
+        with open(f"{fname}.xml", "w+") as f:
+            f.write(dict2xml(copy_dict, wrap="all", indent="  "))
 
 
 class HashTag:
@@ -375,11 +371,7 @@ class HashTag:
         if self.args["no_file_extension"]:
             return hpath
 
-        if (
-            not self.args["no_file_extension"]
-            and not self.args["file_extension"]
-            and not self.args["file_suffix"]
-        ):
+        if not self.args["file_extension"] and not self.args["file_suffix"]:
             return "{}{}".format(hpath, suffix)
         if self.args["file_extension"]:
             hpath = "{}.{}".format(hpath, sha_key)
