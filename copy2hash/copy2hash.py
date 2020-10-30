@@ -37,8 +37,8 @@ def log(msg, mode=None):
         Message to print to the terminal.
     mode : int, optional
         If mode is activated, message becomes for:
-        1. an error message 
-        2. a verbose message 
+        1. an error message
+        2. a verbose message
         3. a warning message
     """
     if mode == 1:
@@ -58,18 +58,18 @@ if sys.version < "3.6":
 
 class SHAKeys:
     """Class of available SHA Keys algorithms.
-    
+
     Attributes
     ----------
     sha1 : str
         String for calling secure hash and message digest algorithms [1,2,3].
     sha224 : str
         String for calling secure hash and message digest algorithms [1,2,3].
-    sha256 : str 
+    sha256 : str
         String for calling secure hash and message digest algorithms [1,2,3].
-    sha384 : str 
+    sha384 : str
         String for calling secure hash and message digest algorithms [1,2,3].
-    sha512 : str 
+    sha512 : str
         String for calling secure hash and message digest algorithms [1,2,3].
     blake2b : str
         String for calling secure hash and message digest algorithms [1,4,5].
@@ -77,9 +77,9 @@ class SHAKeys:
         String for calling secure hash and message digest algorithms [1,4,5].
     md5 : str
         String for calling secure hash and message digest algorithms [1,2].
-    sha3_224 : str 
+    sha3_224 : str
         String for calling secure hash and message digest algorithms [1,4,5].
-    sha3_256 : str 
+    sha3_256 : str
         String for calling secure hash and message digest algorithms [1,4,5].
     sha3_384 : str
         String for calling secure hash and message digest algorithms [1,4,5].
@@ -89,7 +89,7 @@ class SHAKeys:
         String for calling secure hash and message digest algorithms [1,4,5].
     shake_256 : str
         String for calling secure hash and message digest algorithms [1,4,5].
-    
+
     References
     ----------
     .. [1] https://docs.python.org/3/library/hashlib.html
@@ -97,7 +97,7 @@ class SHAKeys:
     .. [3] https://en.wikipedia.org/wiki/NIST_hash_function_competition
     .. [4] https://131002.net/blake/
     .. [5] https://docs.python.org/3/library/hashlib.html#hashlib.blake2b
-    
+
     """
 
     sha1 = "sha1"
@@ -118,13 +118,13 @@ class SHAKeys:
 
 class ExportReport:
     """Export the internal copy dictionary.
-    
-    The ExportReport class is generating the copy- and moving-reports. This class 
-    supports the follwing fileformats: 'csv', 'json', 'pkl', 'txt', 'yaml', and 'xml'. 
-    It is also possible to export a `pure` ASCII file with an individual 
-    file-extension. Furthemore, also a combinition of different fileformats can be 
+
+    The ExportReport class is generating the copy- and moving-reports. This class
+    supports the follwing fileformats: 'csv', 'json', 'pkl', 'txt', 'yaml', and 'xml'.
+    It is also possible to export a `pure` ASCII file with an individual
+    file-extension. Furthemore, also a combinition of different fileformats can be
     chosen.
-    
+
     Parameters
     ----------
     args : dict
@@ -141,7 +141,7 @@ class ExportReport:
         Parameters
         ----------
         copy_dict : dir
-            Internal dictionary will be used first for copying or moving the file(s), 
+            Internal dictionary will be used first for copying or moving the file(s),
             and after cleaning this dictionary will be used for generating the report.
         """
         if self.args["directory"]:
@@ -174,7 +174,7 @@ class ExportReport:
         Parameters
         ----------
         copy_dict : str
-            Internal dictionary will be used first for copying or moving the file(s), 
+            Internal dictionary will be used first for copying or moving the file(s),
             and after cleaning this dictionary will be used for generating the report.
         fname : str
             Filename of the report.
@@ -191,15 +191,14 @@ class ExportReport:
         Parameters
         ----------
         copy_dict : str
-            Internal dictionary will be used first for copying or moving the file(s), 
+            Internal dictionary will be used first for copying or moving the file(s),
             and after cleaning this dictionary will be used for generating the report.
         fname : str
             Filename of the report.
         """
         json_file = json.dumps(copy_dict, indent=4)
-        f = open(f"{fname}.json", "w+")
-        f.write(json_file)
-        f.close()
+        with open(f"{fname}.json", "w+") as f:
+            f.write(json_file)
 
     @staticmethod
     def write_pickle(copy_dict, fname):
@@ -208,14 +207,13 @@ class ExportReport:
         Parameters
         ----------
         copy_dict : str
-            Internal dictionary will be used first for copying or moving the file(s), 
+            Internal dictionary will be used first for copying or moving the file(s),
             and after cleaning this dictionary will be used for generating the report.
         fname : str
             Filename of the report.
         """
-        f = open(f"{fname}.pkl", "wb+")
-        pickle.dump(copy_dict, f)
-        f.close()
+        with open(f"{fname}.pkl", "wb+") as f:
+            pickle.dump(copy_dict, f)
 
     @staticmethod
     def write_txt(copy_dict, fname, fxt="txt"):
@@ -224,10 +222,10 @@ class ExportReport:
         Parameters
         ----------
         copy_dict : str
-            Internal dictionary will be used first for copying or moving the file(s), 
+            Internal dictionary will be used first for copying or moving the file(s),
             and after cleaning this dictionary will be used for generating the report.
         fname : str
-            Filename of the report coming from the parser, by default 'copy_report'. 
+            Filename of the report coming from the parser, by default 'copy_report'.
         fxt : str
             The individual file extension from the parser.
         """
@@ -243,15 +241,14 @@ class ExportReport:
         Parameters
         ----------
         copy_dict : str
-            Internal dictionary will be used first for copying or moving the file(s), 
+            Internal dictionary will be used first for copying or moving the file(s),
             and after cleaning this dictionary will be used for generating the report.
         fname : str
             Filename of the report.
         """
         yaml_file = yaml.dump(copy_dict, indent=4)
-        f = open(f"{fname}.yaml", "w+")
-        f.write(yaml_file)
-        f.close()
+        with open(f"{fname}.yaml", "w+") as f:
+            f.write(yaml_file)
 
     @staticmethod
     def write_xml(copy_dict, fname):
@@ -260,14 +257,13 @@ class ExportReport:
         Parameters
         ----------
         copy_dict : str
-            Internal dictionary will be used first for copying or moving the file(s), 
+            Internal dictionary will be used first for copying or moving the file(s),
             and after cleaning this dictionary will be used for generating the report.
         fname : str
             Filename of the report.
         """
-        f = open(f"{fname}.xml", "w+")
-        f.write(dict2xml(copy_dict, wrap="all", indent="  "))
-        f.close()
+        with open(f"{fname}.xml", "w+") as f:
+            f.write(dict2xml(copy_dict, wrap="all", indent="  "))
 
 
 class HashTag:
@@ -351,6 +347,8 @@ class HashTag:
         elif sha_key == SHAKeys.shake_256:
             hcode = hlib.shake_256(fpath_encoded)
             return hcode.hexdigest(32)
+        else:
+            sys.exit(1)
 
     def make_full_hashname(self, hpath, suffix, sha_key):
         """Make the full hash-secured filename.
@@ -362,22 +360,18 @@ class HashTag:
         suffix : str
             The standard file-extension.
         sha_key : str
-            SHA-key used as prefix or file-extension. 
+            SHA-key used as prefix or file-extension.
 
         Returns
         -------
         hname : str
-            The full hash-secured filename with optional suffixes in as prefix or file 
-            extension. 
+            The full hash-secured filename with optional suffixes in as prefix or file
+            extension.
         """
         if self.args["no_file_extension"]:
             return hpath
 
-        if (
-            not self.args["no_file_extension"]
-            and not self.args["file_extension"]
-            and not self.args["file_suffix"]
-        ):
+        if not self.args["file_extension"] and not self.args["file_suffix"]:
             return "{}{}".format(hpath, suffix)
         if self.args["file_extension"]:
             hpath = "{}.{}".format(hpath, sha_key)
@@ -388,7 +382,7 @@ class HashTag:
     def generate_hashname(self, fname, suffix, sha_key):
         """Generate the hashname of the filename.
 
-        generate_hashname() generates for a given filename and a given reference key, 
+        generate_hashname() generates for a given filename and a given reference key,
         the encoded filename in hexadecimal format.
 
         Parameters
@@ -404,17 +398,17 @@ class HashTag:
         -------
         hname: str
             hash-secured filename.
-        
+
         Notes
         -----
             1. The full-path will be encoded in in hexadecimal format by using a
                 reference secure hash algorithms (sha) from `hashlib`.
-            2. The new hashname will be normally merged with the standard suffix (file 
+            2. The new hashname will be normally merged with the standard suffix (file
                 extension) from the reference filename. The suffix can be optional:
                 a. Remove any file-extension.
-                b. Replaced by the abbreviation of the used secure hash algorithms 
+                b. Replaced by the abbreviation of the used secure hash algorithms
                    (sha).
-                c. Removed the standard file-extension and add the used secure hash 
+                c. Removed the standard file-extension and add the used secure hash
                    algorithms (sha) in front of the new hashname seperated by a colon.
         """
         hpath = self.fpath2hash(fname, sha_key)
@@ -425,8 +419,8 @@ class HashTag:
 
 class Copy2Hash(ExportReport, HashTag):
     """Copy or move file(s) to hash-secured named file(s).
-    
-    The Copy2Hash() class is 
+
+    The Copy2Hash() class is
 
     Parameters
     ----------
@@ -434,16 +428,16 @@ class Copy2Hash(ExportReport, HashTag):
         Class for generating the report of the file(s) copying or moving for retracing
         regular filename(s) with the new generated filenames(s)
     HashTag : class
-        Class for generating the hash-secured names for the files to copy or moving the 
+        Class for generating the hash-secured names for the files to copy or moving the
         files to hash-secured filename(s)
     args : dict
             Dictionary of the keywords and values from the parser
-    
+
     Attributes
     ----------
     _copy_dir : dir
-       Internal dictionary will be used first for copying or moving the file(s), and 
-       after cleaning this dictionary will be used for generating the report. 
+       Internal dictionary will be used first for copying or moving the file(s), and
+       after cleaning this dictionary will be used for generating the report.
     """
 
     def __init__(self, args):
@@ -493,7 +487,7 @@ class Copy2Hash(ExportReport, HashTag):
     def get_copypath(s_ppath, args):
         """Get the path to copy or move the file(s).
 
-        get_copypath() checks if the copy directory is equal to the home directory 
+        get_copypath() checks if the copy directory is equal to the home directory
         (`./`), if not it replaced the home directory by the new reference directory.
 
         Parameters
@@ -506,10 +500,10 @@ class Copy2Hash(ExportReport, HashTag):
         Returns
         -------
         s_ppath: str
-            Standard parents path for copying of moving the hash-secured files from 
+            Standard parents path for copying of moving the hash-secured files from
             './' to './'.
         n_ppath: str, optional
-            New parents path for copying of moving the hash-secured files from './' 
+            New parents path for copying of moving the hash-secured files from './'
             to './directory'.
         """
         directory = args["directory"]
@@ -526,8 +520,8 @@ class Copy2Hash(ExportReport, HashTag):
         """Get the filenames and save it.
 
         find_files() reads the filenames and the working mode to an internal dictionary.
-        This is part I of II, because get_hash() has to add the hash-keys according to 
-        the number of selected SHA keys in the parser. 
+        This is part I of II, because get_hash() has to add the hash-keys according to
+        the number of selected SHA keys in the parser.
         """
         for i, fname in enumerate(self.args["infile"]):
             self._copy_dir["index"].append(i)
@@ -549,16 +543,16 @@ class Copy2Hash(ExportReport, HashTag):
     def transform_hash(self):
         """Get the hash-secured file names.
 
-        transform_hash() transform the regular filename(s) to a hash-secured 
-        filename(s). It adds the new hash-secured filename(s) and their export 
+        transform_hash() transform the regular filename(s) to a hash-secured
+        filename(s). It adds the new hash-secured filename(s) and their export
         directory to the _copy_dir directory.
 
         Notes
         -----
-        In the old version, just the filename (self._copy_dir["fpath"]) without file 
-        extension was used, but this is problematic in cases of equal filenames with 
+        In the old version, just the filename (self._copy_dir["fpath"]) without file
+        extension was used, but this is problematic in cases of equal filenames with
         different extension. Now, the full filename (self._copy_dir["filename"]) are
-        used. 
+        used.
         """
         for i, sha_key in enumerate(self.args["sha"]):
             sha_fname = []
@@ -632,12 +626,12 @@ class Copy2Hash(ExportReport, HashTag):
 
     def copy2hash(self):
         """Copy or move the file(s) to hash renamed file(s).
-        
+
         Attributes
         ----------
         1. self.find_files() -> find the file(s)
         2. self.transform_hash() -> generate the hash names for the file(s)
-        3. move or copied the file(s) -> 
+        3. move or copied the file(s) ->
         4. Remove unnecessary entries in the dictionary -> self.clean_dict()
         5. make a report with of the copied or moved file(s) ->  self.make_export
         """
@@ -653,7 +647,7 @@ class Copy2Hash(ExportReport, HashTag):
 
 def get_args(opt=None):
     """Get the parser arguments from the command line.
-    
+
     Returns
     -------
     args : dict
@@ -788,7 +782,7 @@ def get_args(opt=None):
 
 def command_line_runner(opt=None):
     """Run bashplot() via command line.
-    
+
     Parameters
     ----------
     opt : dict, optional
